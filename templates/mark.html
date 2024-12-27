@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Mark - {% endblock title %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/check.css') }}">
+{% endblock style %}
+
+{% block body %}
+<div class="banner">
+  <div class="hero rounded-3 shadow p-3">
+    <h1>Mark Attendance</h1>
+    <div class="find">
+      <form method="POST" action="/mark">
+        <button type="submit" class="btn btn-primary">Open Webcam</button>
+    </form>
+    </div>
+    {% if message %}
+      <div class="alert alert-info" role="alert">
+          {{ message }}
+      </div>
+
+      <script>
+        // Automatically redirect to the "capture" route after 2 seconds
+
+            setTimeout(function () {
+                window.location.href = "/capture";
+            }, 2000);
+    </script>
+{% endif %}
+
+    {% if mark_message %}
+      <div class="alert alert-info" role="alert">
+          {{ mark_message }}
+      </div>
+    
+      {% endif %}
+    
+  </div>
+</div>
+
+{% endblock body %}

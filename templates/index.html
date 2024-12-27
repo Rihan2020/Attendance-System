@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %} Home - {% endblock title %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/home.css') }}">
+{% endblock style %}
+
+{% block body %}
+
+<div class="banner">
+  <div class="hero rounded-3 shadow p-3">
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <label for="exampleFormControlInput1" class="form-label">Select a Picture of Student</label>
+
+      <input type="file" name="picture" accept="image/*" required>
+      <label for="exampleFormControlInput1" class="form-label">Enter Student Name: </label>
+      <input class="px-1" type="text" name="name" required placeholder="xyz">
+      <input class="btn btn-danger m-3" type="submit" value="Submit">
+    </form>
+
+    <div class="students">
+      <h1>Added Students</h1>
+      <div class="table_container">
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">SNo</th>
+                <th scope="col">Picture</th>
+                <th scope="col">Name</th>
+                <th scope="col">Date</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+    
+              {% for stud in allstud %}
+              <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td><img src="{{stud.picture}}" class="rounded" alt=""></td>
+                <td>{{stud.name}}</td>
+                <td>{{stud.date}}</td>
+                <td><a href="/delete/{{stud.sno}}" type="button" class="btn btn-outline-info btn-sm mx-1">Delete</button>
+                </td>
+              </tr>
+    
+              {% endfor %}
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+{% endblock body %}

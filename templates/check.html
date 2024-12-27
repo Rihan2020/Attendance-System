@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Check - {% endblock title %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/check.css') }}">
+{% endblock style %}
+{% block body %}
+<div class="banner">
+  <div class="hero rounded-3 shadow p-3">
+    <div class="find my-3">
+      <h1>Check Attendance</h1>
+      <form action="/check" method="POST" enctype="multipart/form-data">
+        <label for="exampleFormControlInput1" class="form-label">Select the Date: </label>
+        <input class="px-1" type="date" name="date">
+        <input class="btn btn-danger m-2" type="submit" value="Submit">
+      </form>
+    </div>
+    <div class="students">
+      <h3>Students Details</h3>
+      <div class="table_container">
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">SNo</th>
+              <th scope="col">Name</th>
+              <th scope="col">Date</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+  
+            {% if attendance_records %}
+                    {% for record in attendance_records %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ record.student_id }}</td>
+                        <td>{{ "Present" if record.status else "Absent" }}</td>
+                        <td>{{ record.date_att}}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">No records found for the selected date.</td>
+                    </tr>
+                {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
